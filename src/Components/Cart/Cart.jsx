@@ -100,7 +100,17 @@ const Cart = (props) => {
   );
   const modalLoading = <p>Sending request...</p>;
   const modalError = <p> Failed to send request </p>;
-  const modalSucceedMessage = <p> Your order has been submitted </p>;
+const modalSucceedMessage = (
+  <div className={styles.successContainer}>
+    <div className={styles.successIcon}>✅</div>
+    <h3 className={styles.successTitle}>Order Confirmed! 🎉</h3>
+    <p className={styles.successMessage}>Your order has been successfully submitted</p>
+    <p className={styles.successDetails}>We'll send you a confirmation email shortly</p>
+    <button className={styles.successButton} onClick={props.onClose}>
+      Continue Shopping
+    </button>
+  </div>
+);
   return (
     <Modal onClose={props.onClose}>
       {!loading && !error && requestResult !== "ok" && modalContent}
