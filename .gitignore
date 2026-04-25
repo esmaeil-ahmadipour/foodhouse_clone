@@ -1,0 +1,74 @@
+# ─────────────────────────────
+# Node / Core
+# ─────────────────────────────
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+
+
+# ─────────────────────────────
+# Vite
+# ─────────────────────────────
+dist/
+vite.config.local.*
+.vite/
+*.local
+
+# ─────────────────────────────
+# Environment Variables
+# ─────────────────────────────
+.env
+.env.*
+!.env.example
+
+# ─────────────────────────────
+# Logs
+# ─────────────────────────────
+logs/
+*.log
+*.log.*
+*.out
+*.pid
+*.seed
+*.tgz
+
+# ─────────────────────────────
+# Editor / IDE
+# ─────────────────────────────
+.vscode/
+*.code-workspace
+
+.idea/
+*.iml
+
+# VSCode settings exceptions (optional)
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/launch.json
+
+# ─────────────────────────────
+# System files
+# ─────────────────────────────
+.DS_Store
+Thumbs.db
+Desktop.ini
+
+# ─────────────────────────────
+# Tests / Coverage
+# ─────────────────────────────
+coverage/
+*.lcov
+
+# ─────────────────────────────
+# Optional: TypeScript build cache
+# ─────────────────────────────
+*.tsbuildinfo
+
+# ─────────────────────────────
+# Optional: local tooling caches
+# ─────────────────────────────
+.eslintcache
+.prettier-cache/
+.husky/_/
