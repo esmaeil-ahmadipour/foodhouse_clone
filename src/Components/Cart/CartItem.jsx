@@ -1,7 +1,7 @@
 import styles from "./CartItem.module.css";
 
 const CartItem = (props) => {
-  const price = `${props.price} تومان`;
+  const price = `${props.price} USD`;
   return (
     <li className={styles["cart-item"]}>
       <div>

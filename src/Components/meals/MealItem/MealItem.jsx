@@ -4,13 +4,13 @@ import MealItemForm from "./MealItemForm";
 import CartContext from "../../../store/cart-context";
 const MealItem = (props) => {
   const cartContext = useContext(CartContext);
-  let price = `${props.price} تومان`;
+  let price = `${props.price} USD`;
   const addToCartHandler = (amount) => {
     cartContext.addItem({
       id: props.id,
       name: props.name,
       amount: amount,
-      price: props.price  
+      price: props.price,
     });
   };
 

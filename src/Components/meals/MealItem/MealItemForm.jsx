@@ -7,13 +7,13 @@ const MealItemForm = (props) => {
   const submitHandler = (event) => {
     event.preventDefault();
     const enteredAmount = amountInputRef.current.value;
-    const enteredAmountNumberic= +enteredAmount;
+    const enteredAmountNumberic = +enteredAmount;
     props.onAddToCart(enteredAmountNumberic);
   };
   return (
     <form className={styles.form} onSubmit={submitHandler}>
       <Input
-        lable="تعداد"
+        lable="Quantity"
         ref={amountInputRef}
         input={{
           id: "amount_" + props.id,
@@ -25,7 +25,7 @@ const MealItemForm = (props) => {
         }}
       ></Input>
 
-      <button type="submit">+ افزودن</button>
+      <button type="submit">Add +</button>
     </form>
   );
 };

@@ -20,7 +20,7 @@ const Cart = (props) => {
   };
 
   const cartCtxt = useContext(CartContext);
-  const totalAmounts = ` ${cartCtxt.totalAmount} تومان`;
+  const totalAmounts = ` ${cartCtxt.totalAmount} USD`;
   const hasItem = cartCtxt.items.length > 0;
   const orderClickHandler = () => {
     setIsCheckout(true);
@@ -53,12 +53,12 @@ const Cart = (props) => {
   const modalActions = (
     <div className={styles.actions}>
       <button className={styles["cart-button-alt"]} onClick={props.onClose}>
-        بستن
+        Close
       </button>
 
       {hasItem && (
         <button className={styles.button} onClick={orderClickHandler}>
-          سفارش
+          Place Order
         </button>
       )}
     </div>
@@ -85,7 +85,7 @@ const Cart = (props) => {
     <>
       {cartItems}
       <div className={styles.total}>
-        <span>قیمت کل</span>
+        <span>Total Price</span>
 
         <span>{totalAmounts}</span>
       </div>
@@ -98,9 +98,9 @@ const Cart = (props) => {
       {!isCheckout && modalActions}
     </>
   );
-  const modalLoading = <p>در حال ارسال درخواست</p>;
-  const modalError = <p> خطا در ارسال درخواست </p>;
-  const modalSucceedMessage = <p> درخواست شما ثبت گردید </p>;
+  const modalLoading = <p>Sending request...</p>;
+  const modalError = <p> Failed to send request </p>;
+  const modalSucceedMessage = <p> Your order has been submitted </p>;
   return (
     <Modal onClose={props.onClose}>
       {!loading && !error && requestResult !== "ok" && modalContent}

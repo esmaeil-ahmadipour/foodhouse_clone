@@ -16,17 +16,21 @@
 }
 
 .actions {
-  text-align: right;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
 }
 
 .actions button {
   cursor: pointer;
-  width: 5rem;
+  white-space: nowrap; /* Keep text on one line */
+  min-width: fit-content; /* Adjust width to content */
+  width: auto; /* Override fixed width */
   height: 32px;
   background-color: transparent;
   border: 1px solid #8a2b06;
   border-radius: 25px;
-  padding: 0.5rem, 2rem;
+  padding: 0 1.5rem; /* Changed from 0.5rem, 2rem */
   margin: 4px;
 }
 
@@ -44,4 +48,16 @@
 .actions .button {
   background-color: #5a1a01;
   color: #fff;
+}
+
+/* Optional: For very small screens, stack buttons vertically */
+@media (max-width: 480px) {
+  .actions {
+    flex-direction: column;
+  }
+
+  .actions button {
+    width: 100%;
+    white-space: normal; /* Allow wrapping only on very small screens */
+  }
 }

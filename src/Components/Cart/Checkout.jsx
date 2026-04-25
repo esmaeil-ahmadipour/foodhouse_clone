@@ -1,8 +1,6 @@
 import useInput from "../../hooks/useInput";
 import styles from "./Checkout.module.css";
 
-
-
 const controlClass = (hasSomeError) =>
   `${styles.control} ${hasSomeError ? styles.invalid : ""}`;
 
@@ -32,57 +30,56 @@ const Checkout = (props) => {
     blurHandler: codeBlurHandler,
   } = useInput(isFilled);
 
-
   const submitHandler = (event) => {
-  event.preventDefault();
-  let formIsValid = nameIsValid && streetIsValid && codeIsValid;
-  if (!formIsValid) return;
-  let userInfo = { name, street, code };
-  props.onConfirm(userInfo);
-};
+    event.preventDefault();
+    let formIsValid = nameIsValid && streetIsValid && codeIsValid;
+    if (!formIsValid) return;
+    let userInfo = { name, street, code };
+    props.onConfirm(userInfo);
+  };
 
   return (
     <form className={styles.form} onSubmit={submitHandler}>
       <div className={controlClass(nameHasError)}>
-        <label htmlFor="name"> نام :</label>
+        <label htmlFor="name">Name:</label>
         <input
           onChange={nameChangeHandler}
           onBlur={nameBlurHandler}
           type="text"
           id="name"
         ></input>
-        {nameHasError && <p className={styles.invalid}>فیلد نام پر شود</p>}
+        {nameHasError && <p className={styles.invalid}>Name is required</p>}
       </div>
 
       <div className={controlClass(streetHasError)}>
-        <label htmlFor="street"> خیابان :</label>
+        <label htmlFor="street">Street:</label>
         <input
           onChange={streetChangeHandler}
           onBlur={streetBlurHandler}
           type="text"
           id="street"
         ></input>
-        {streetHasError && <p className={styles.invalid}>فیلد خیابان پر شود</p>}
+        {streetHasError && <p className={styles.invalid}>Street is required</p>}
       </div>
 
       <div className={controlClass(codeHasError)}>
-        <label htmlFor="code"> پلاک :</label>
+        <label htmlFor="code">Code:</label>
         <input
           onChange={codeChangeHandler}
           onBlur={codeBlurHandler}
           type="text"
           id="code"
         ></input>
-        {codeHasError && <p className={styles.invalid}>فیلد پلاک پر شود</p>}
+        {codeHasError && <p className={styles.invalid}>Code is required</p>}
       </div>
 
       <div className={styles.actions}>
         <button type="submit" className={styles.submit}>
-          تایید
+          Confirm
         </button>
 
         <button type="button" onClick={props.onCancel}>
-          انصراف
+          Cancel
         </button>
       </div>
     </form>

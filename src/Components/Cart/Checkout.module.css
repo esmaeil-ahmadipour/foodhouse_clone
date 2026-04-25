@@ -16,7 +16,7 @@
 
 .form {
   margin: 1rem 0;
-  direction: rtl;
+  direction: ltr;
   height: 15rem;
   overflow: auto;
 }

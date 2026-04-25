@@ -14,31 +14,24 @@ const AvailableMeals = () => {
       },
       (data) => setMeals(data),
     );
-  },      [sendRequest],
-);
+  }, [sendRequest]);
 
-  if(loading){
-    return  <section className={styles.loaidn}>
-      <p>
-       در حال بارگذاری
-      </p>
-    </section>
+  if (loading) {
+    return (
+      <section className={styles.loaidn}>
+        <p>Loading ...</p>
+      </section>
+    );
   }
 
-
-  if(error){
-    return  <section className={styles.error}>
-            <p>
-      خطا
-      </p>
-      <p>
-      {error}
-      </p>
-    </section>
+  if (error) {
+    return (
+      <section className={styles.error}>
+        <p>Error !</p>
+        <p>{error}</p>
+      </section>
+    );
   }
-
-
-
 
   let mealsList = meals.map((m) => (
     <MealItem
