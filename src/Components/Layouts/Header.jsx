@@ -6,12 +6,19 @@ const Header = (props) => {
   return (
     <>
       <header className={styles.header}>
-        <h1>Quick Food</h1>
+        <div className={styles["logo-container"]}>
+          <span className={styles["logo-icon"]}>🍔</span>
+          <h1>QuickFood</h1>
+        </div>
         <HeaderCardButton onClick={props.onshowCart} />
       </header>
 
       <div className={styles["main-image"]}>
-        <img src={FoodImage} alt="Best Foods" />
+        <div className={styles["image-overlay"]}></div>
+        <img src={FoodImage} alt="Delicious meals prepared fresh" />
+        <div className={styles["image-text"]}>
+          <span>Fresh • Fast • Delicious</span>
+        </div>
       </div>
     </>
   );
