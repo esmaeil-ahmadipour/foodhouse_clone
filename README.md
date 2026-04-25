@@ -1,16 +1,98 @@
-# React + Vite
+# Food House – Modern Food Ordering App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+A clean, modern, and fast food ordering application built with **React 18** and **Vite 5**. The app features a meals list, an interactive cart modal, and global state management powered by React Context API.
 
-Currently, two official plugins are available:
+## 🚀 Overview
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+React Meals allows users to:
 
-## React Compiler
+- Browse meals
+- Add items to a shopping cart
+- Adjust item quantities
+- Open/close a responsive cart modal
+- Enjoy fast performance powered by Vite
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+## 🎯 Features
 
-## Expanding the ESLint configuration
+- 🛒 Interactive Cart Modal
+- 🍽️ Meals Listing UI
+- 🔥 Global State with Context Provider
+- ⚡ Super-fast Dev Server (Vite)
+- ♻️ Modular and Reusable Components
+- ✨ Clean UI & Maintainable Codebase
+- ✔️ ESLint 9 configured for quality
 
-If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and [`typescript-eslint`](https://typescript-eslint.io) in your project.
+## 🛠 Tech Stack
+
+- React 18
+- Vite 5
+- JavaScript (ES Module)
+- Context API
+- ESLint 9
+- pnpm
+
+## ⚙️ Backend API Setup
+
+This frontend application is designed to work hand-in-hand with a dedicated backend API.  
+Without the backend service, the app cannot fetch data or perform any meaningful operations.
+
+> 🔗 **Backend Repository:**  
+> [`foodhouse_clone_api`](https://github.com/esmaeil-ahmadipour/foodhouse_clone_api)
+
+All details about:
+
+- ✅ API setup
+- 🔧 Environment configuration
+- 🚀 Server startup
+
+are fully documented in the backend repository’s README.
+
+## ⚙️ Installation & Setup
+
+### 1. Clone the repository
+
+```
+git clone <your-repo-url>
+cd project
+```
+
+### 2. Install dependencies
+
+```
+pnpm install
+```
+
+### 3. Run the development server
+
+```
+pnpm dev
+```
+
+### 4. Build for production
+
+```
+pnpm build
+```
+
+### 5. Preview the build
+
+```
+pnpm preview
+```
+
+## 📜 Scripts
+
+```
+pnpm dev       # Run dev server
+pnpm build     # Production build
+pnpm lint      # Run ESLint
+pnpm preview   # Preview built app
+```
+
+## 🌟 Why This Project Is Awesome
+
+This repository is a **clean and scalable foundation** for building real-world food ordering apps, stores, and any cart-driven UI systems.
+
+## 📄 License
+
+[LICENSE File](./LICENSE)
