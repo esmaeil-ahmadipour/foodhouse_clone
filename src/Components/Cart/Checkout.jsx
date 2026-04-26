@@ -1,76 +1,75 @@
-import useInput from "../../hooks/useInput";
+import { useState } from "react";
+import { checkoutSchema } from "../../validation/checkoutSchema";
 import styles from "./Checkout.module.css";
 
-const controlClass = (hasSomeError) =>
-  `${styles.control} ${hasSomeError ? styles.invalid : ""}`;
+const controlClass = (hasError) =>
+  `${styles.control} ${hasError ? styles.invalid : ""}`;
 
 const Checkout = (props) => {
-  const isFilled = (value) => `${value}`.trim().length > 0;
-  const {
-    value: name,
-    isValid: nameIsValid,
-    hasError: nameHasError,
-    valueChangeHandler: nameChangeHandler,
-    blurHandler: nameBlurHandler,
-  } = useInput(isFilled);
+  const [form, setForm] = useState({
+    name: "",
+    street: "",
+    code: "",
+  });
 
-  const {
-    value: street,
-    isValid: streetIsValid,
-    hasError: streetHasError,
-    valueChangeHandler: streetChangeHandler,
-    blurHandler: streetBlurHandler,
-  } = useInput(isFilled);
+  const [errors, setErrors] = useState({});
 
-  const {
-    value: code,
-    isValid: codeIsValid,
-    hasError: codeHasError,
-    valueChangeHandler: codeChangeHandler,
-    blurHandler: codeBlurHandler,
-  } = useInput(isFilled);
+  const changeHandler = (event) => {
+    const { id, value } = event.target;
+
+    setForm((prev) => ({
+      ...prev,
+      [id]: value,
+    }));
+
+    // Clear error for this field when user starts typing
+    if (errors[id]) {
+      setErrors((prev) => ({
+        ...prev,
+        [id]: undefined,
+      }));
+    }
+  };
 
   const submitHandler = (event) => {
     event.preventDefault();
-    let formIsValid = nameIsValid && streetIsValid && codeIsValid;
-    if (!formIsValid) return;
-    let userInfo = { name, street, code };
-    props.onConfirm(userInfo);
+
+    const result = checkoutSchema.safeParse(form);
+
+    if (!result.success) {
+      const fieldErrors = {};
+
+      // Zod v4 uses .issues array
+      result.error.issues.forEach((err) => {
+        const fieldPath = err.path[0];
+        fieldErrors[fieldPath] = err.message;
+      });
+
+      setErrors(fieldErrors);
+      return;
+    }
+
+    props.onConfirm(result.data);
   };
 
   return (
     <form className={styles.form} onSubmit={submitHandler}>
-      <div className={controlClass(nameHasError)}>
+      <div className={controlClass(!!errors.name)}>
         <label htmlFor="name">Name:</label>
-        <input
-          onChange={nameChangeHandler}
-          onBlur={nameBlurHandler}
-          type="text"
-          id="name"
-        ></input>
-        {nameHasError && <p className={styles.invalid}>Name is required</p>}
+        <input id="name" value={form.name} onChange={changeHandler} />
+        {errors.name && <p className={styles.invalid}>{errors.name}</p>}
       </div>
 
-      <div className={controlClass(streetHasError)}>
+      <div className={controlClass(!!errors.street)}>
         <label htmlFor="street">Street:</label>
-        <input
-          onChange={streetChangeHandler}
-          onBlur={streetBlurHandler}
-          type="text"
-          id="street"
-        ></input>
-        {streetHasError && <p className={styles.invalid}>Street is required</p>}
+        <input id="street" value={form.street} onChange={changeHandler} />
+        {errors.street && <p className={styles.invalid}>{errors.street}</p>}
       </div>
 
-      <div className={controlClass(codeHasError)}>
+      <div className={controlClass(!!errors.code)}>
         <label htmlFor="code">Code:</label>
-        <input
-          onChange={codeChangeHandler}
-          onBlur={codeBlurHandler}
-          type="text"
-          id="code"
-        ></input>
-        {codeHasError && <p className={styles.invalid}>Code is required</p>}
+        <input id="code" value={form.code} onChange={changeHandler} />
+        {errors.code && <p className={styles.invalid}>{errors.code}</p>}
       </div>
 
       <div className={styles.actions}>
