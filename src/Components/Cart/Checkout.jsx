@@ -1,56 +1,49 @@
 import styles from "./Checkout.module.css";
-import { useCheckoutStore } from "../../store/useCheckoutStore";
+import { useForm } from "react-hook-form";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { checkoutSchema } from "../../validation/checkoutSchema";
 
-const Checkout = (props) => {
-  const form = useCheckoutStore((state) => state.form);
-  const errors = useCheckoutStore((state) => state.errors);
-  const setField = useCheckoutStore((state) => state.setField);
-  const validate = useCheckoutStore((state) => state.validate);
-  const reset = useCheckoutStore((state) => state.reset);
+const Checkout = ({ onCancel, onConfirm }) => {
+  const {
+    register,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
+    resolver: zodResolver(checkoutSchema),
+  });
+
+  const submitHandler = (data) => {
+    onConfirm(data);
+  };
 
   const controlClass = (hasError) =>
     [styles.control, hasError && styles.invalid].filter(Boolean).join(" ");
 
-  const changeHandler = (event) => {
-    const { id, value } = event.target;
-    setField(id, value);
-  };
-
-  const submitHandler = (event) => {
-    event.preventDefault();
-
-    const result = validate();
-
-    if (!result.success) return;
-
-    props.onConfirm(result.data);
-    reset();
-  };
-
   return (
-    <form className={styles.form} onSubmit={submitHandler}>
-      <div className={controlClass(!!errors.name)}>
+    <form className={styles.form} onSubmit={handleSubmit(submitHandler)}>
+      <div className={controlClass(errors.name)}>
         <label htmlFor="name">Name:</label>
-        <input id="name" value={form.name} onChange={changeHandler} />
-        {errors.name && <p className={styles.invalid}>{errors.name}</p>}
+        <input id="name" {...register("name")} />
+        {errors.name && <p>{errors.name.message}</p>}
       </div>
 
-      <div className={controlClass(!!errors.street)}>
+      <div className={controlClass(errors.street)}>
         <label htmlFor="street">Street:</label>
-        <input id="street" value={form.street} onChange={changeHandler} />
-        {errors.street && <p className={styles.invalid}>{errors.street}</p>}
+        <input id="street" {...register("street")} />
+        {errors.street && <p>{errors.street.message}</p>}
       </div>
 
-      <div className={controlClass(!!errors.code)}>
+      <div className={controlClass(errors.code)}>
         <label htmlFor="code">Code:</label>
-        <input id="code" value={form.code} onChange={changeHandler} />
-        {errors.code && <p className={styles.invalid}>{errors.code}</p>}
+        <input id="code" {...register("code")} />
+        {errors.code && <p>{errors.code.message}</p>}
       </div>
 
       <div className={styles.actions}>
-        <button type="button" onClick={props.onCancel}>
+        <button type="button" onClick={onCancel}>
           Cancel
         </button>
+
         <button type="submit" className={styles.submit}>
           Confirm
         </button>

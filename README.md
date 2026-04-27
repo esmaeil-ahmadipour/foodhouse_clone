@@ -1,10 +1,10 @@
 # Food House – Modern Food Ordering App
 
-A clean, modern, and fast food ordering application built with **React 18** and **Vite 5**. The app features a meals list, an interactive cart modal, and global state management powered by **Zustand**.
+A clean, modern, and fast food ordering application built with React 18 and Vite 5. The app features a meals list, an interactive cart modal, and global state management powered by Zustand, with form handling powered by React Hook Form and Zod.
 
 ## 🚀 Overview
 
-React Meals allows users to:
+Food House allows users to:
 
 - Browse meals from a backend API
 - Add items to a shopping cart
@@ -14,13 +14,19 @@ React Meals allows users to:
 - Enjoy persistent cart state (localStorage)
 - Fast performance powered by Vite
 
+Under the hood, the app uses:
+
+- **Zustand** for global UI state (cart, modal)
+- **React Hook Form + Zod** for type-safe and performant form handling
+
 ## 🎯 Features
 
-- 🛒 Interactive Cart Modal with Zustand state management
+- 🛒 Interactive Cart Modal with **Zustand** state management
 - 🍽️ Dynamic Meals Listing from API
 - 🎯 Centralized Modal System (GlobalModalHost)
 - 📦 Persistent Cart State (localStorage)
-- ✅ Form Validation with Zod
+- ✅ **Form Handling with React Hook Form**
+- ✅ **Schema-based Validation with Zod (via @hookform/resolvers)**
 - ⚡ Super-fast Dev Server (Vite)
 - ♻️ Modular and Reusable Components
 - ✨ Clean UI & Maintainable Codebase
@@ -31,8 +37,10 @@ React Meals allows users to:
 - React 18
 - Vite 5
 - JavaScript (ES Module)
-- Zustand (State Management)
-- Zod (Validation)
+- Zustand (Global State Management)
+- React Hook Form (Form State Management)
+- Zod (Schema-based Validation)
+- @hookform/resolvers (RHF + Zod integration)
 - ESLint 9
 - pnpm
 
@@ -102,6 +110,12 @@ Migrated from React Context API to Zustand for:
 - ⚡ Better performance (selective subscriptions)
 - 💾 Persistent cart (localStorage)
 - 🧹 Simpler component logic
+
+Current state architecture:
+
+- 🧺 **Global client state** (cart, modal visibility) – managed by **Zustand**
+- 🧾 **Form state** (checkout form) – managed by **React Hook Form**
+- ✅ **Validation** – powered by **Zod** (integrated through `@hookform/resolvers`)
 
 ## 📄 License
 

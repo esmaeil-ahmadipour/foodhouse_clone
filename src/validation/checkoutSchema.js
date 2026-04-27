@@ -6,6 +6,5 @@ export const checkoutSchema = z.object({
   code: z
     .string()
     .regex(/^\d+$/, "Postal code must contain only numbers")
-    .length(10, "Postal code must be exactly 10 digits")
-    .transform((val) => parseInt(val, 10)),
+    .length(10, "Postal code must be exactly 10 digits"),
 });
