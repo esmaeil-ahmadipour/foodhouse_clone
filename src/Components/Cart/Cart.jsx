@@ -74,43 +74,55 @@ const Cart = (props) => {
           price={item.price}
           onAdd={cartItemAddHandler.bind(null, item)}
           onRemove={cartItemRemoveHandler.bind(null, item.id)}
-        ></CartItem>
+        />
       ))}
     </ul>
   );
 
-  const isEmptyCart = cartCtxt.items.length < 1;
-
   const modalContent = (
     <>
-      {cartItems}
-      <div className={styles.total}>
-        <span>Total Price</span>
+      {cartCtxt.items.length > 0 && cartItems}
 
-        <span>{totalAmounts}</span>
-      </div>
-      {isCheckout && (
-        <Checkout
-          onCancel={props.onClose}
-          onConfirm={checkoutConfirmHandler}
-        ></Checkout>
+      {cartCtxt.items.length === 0 && (
+        <div className={styles.emptyCart}>
+          <p>Your cart is empty 😢</p>
+          <p>Add some delicious meals!</p>
+        </div>
       )}
+
+      {/* فقط وقتی آیتم هست قیمت نشون بده */}
+      {cartCtxt.items.length > 0 && (
+        <div className={styles.total}>
+          <span>Total Price</span>
+          <span>{totalAmounts}</span>
+        </div>
+      )}
+
+      {isCheckout && (
+        <Checkout onCancel={props.onClose} onConfirm={checkoutConfirmHandler} />
+      )}
+
       {!isCheckout && modalActions}
     </>
   );
+
   const modalLoading = <p>Sending request...</p>;
   const modalError = <p> Failed to send request </p>;
-const modalSucceedMessage = (
-  <div className={styles.successContainer}>
-    <div className={styles.successIcon}>✅</div>
-    <h3 className={styles.successTitle}>Order Confirmed! 🎉</h3>
-    <p className={styles.successMessage}>Your order has been successfully submitted</p>
-    <p className={styles.successDetails}>We'll send you a confirmation email shortly</p>
-    <button className={styles.successButton} onClick={props.onClose}>
-      Continue Shopping
-    </button>
-  </div>
-);
+  const modalSucceedMessage = (
+    <div className={styles.successContainer}>
+      <div className={styles.successIcon}>✅</div>
+      <h3 className={styles.successTitle}>Order Confirmed! 🎉</h3>
+      <p className={styles.successMessage}>
+        Your order has been successfully submitted
+      </p>
+      <p className={styles.successDetails}>
+        We'll send you a confirmation email shortly
+      </p>
+      <button className={styles.successButton} onClick={props.onClose}>
+        Continue Shopping
+      </button>
+    </div>
+  );
   return (
     <Modal onClose={props.onClose}>
       {!loading && !error && requestResult !== "ok" && modalContent}

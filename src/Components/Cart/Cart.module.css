@@ -139,3 +139,19 @@
     transform: scale(1.2);
   }
 }
+
+.emptyCart {
+  text-align: center;
+  padding: 3rem 1rem;
+  color: #888;
+}
+
+.emptyCart p:first-child {
+  font-size: 1.2rem;
+  margin-bottom: 0.5rem;
+}
+
+.emptyCart p:last-child {
+  font-size: 0.9rem;
+  color: #aaa;
+}
