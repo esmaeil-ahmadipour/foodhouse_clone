@@ -1,55 +1,30 @@
-import { useState } from "react";
-import { checkoutSchema } from "../../validation/checkoutSchema";
 import styles from "./Checkout.module.css";
-
-const controlClass = (hasError) =>
-  `${styles.control} ${hasError ? styles.invalid : ""}`;
+import { useCheckoutStore } from "../../store/useCheckoutStore";
 
 const Checkout = (props) => {
-  const [form, setForm] = useState({
-    name: "",
-    street: "",
-    code: "",
-  });
+  const form = useCheckoutStore((state) => state.form);
+  const errors = useCheckoutStore((state) => state.errors);
+  const setField = useCheckoutStore((state) => state.setField);
+  const validate = useCheckoutStore((state) => state.validate);
+  const reset = useCheckoutStore((state) => state.reset);
 
-  const [errors, setErrors] = useState({});
+  const controlClass = (hasError) =>
+    [styles.control, hasError && styles.invalid].filter(Boolean).join(" ");
 
   const changeHandler = (event) => {
     const { id, value } = event.target;
-
-    setForm((prev) => ({
-      ...prev,
-      [id]: value,
-    }));
-
-    // Clear error for this field when user starts typing
-    if (errors[id]) {
-      setErrors((prev) => ({
-        ...prev,
-        [id]: undefined,
-      }));
-    }
+    setField(id, value);
   };
 
   const submitHandler = (event) => {
     event.preventDefault();
 
-    const result = checkoutSchema.safeParse(form);
+    const result = validate();
 
-    if (!result.success) {
-      const fieldErrors = {};
-
-      // Zod v4 uses .issues array
-      result.error.issues.forEach((err) => {
-        const fieldPath = err.path[0];
-        fieldErrors[fieldPath] = err.message;
-      });
-
-      setErrors(fieldErrors);
-      return;
-    }
+    if (!result.success) return;
 
     props.onConfirm(result.data);
+    reset();
   };
 
   return (
@@ -73,12 +48,11 @@ const Checkout = (props) => {
       </div>
 
       <div className={styles.actions}>
-        <button type="submit" className={styles.submit}>
-          Confirm
-        </button>
-
         <button type="button" onClick={props.onCancel}>
           Cancel
+        </button>
+        <button type="submit" className={styles.submit}>
+          Confirm
         </button>
       </div>
     </form>
