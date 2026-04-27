@@ -36,6 +36,7 @@ const AvailableMeals = () => {
   let mealsList = meals.map((m) => (
     <MealItem
       name={m.name}
+      key={m.id}
       price={m.price}
       description={m.description}
       id={m.id}

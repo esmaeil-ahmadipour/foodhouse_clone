@@ -4,14 +4,14 @@ const CartIcon = () => {
       version="1.1"
       id="Layer_1"
       xmlns="http://www.w3.org/2000/svg"
-      xmlns:xlink="http://www.w3.org/1999/xlink"
+      xmlnsXlink="http://www.w3.org/1999/xlink"
       x="0px"
       y="0px"
       width="24px"
       height="24px"
       viewBox="0 0 512 512"
-      enable-background="new 0 0 512 512"
-      xml:space="preserve"
+      enableBackground="new 0 0 512 512"
+      xmlSpace="preserve"
     >
       <g id="cart_2">
         <g>

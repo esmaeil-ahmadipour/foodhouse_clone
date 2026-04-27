@@ -1,19 +1,18 @@
 import styles from "./HeaderCardButton.module.css";
 import CartIcon from "../Cart/CartIcon.jsx";
-import { useContext, useEffect, useState } from "react";
-import CartContext from "../../store/cart-context.js";
+import { useEffect, useState } from "react";
+import { useCartStore } from "../../store/useCartStore";
 
 const HeaderCardButton = (props) => {
-  const cartCtx = useContext(CartContext);
+  const items = useCartStore((state) => state.items);
   const [isJumping, setIsJumping] = useState(false);
   const [prevCount, setPrevCount] = useState(0);
   
-  const numberOfCartItems = cartCtx.items.reduce(
+  const numberOfCartItems = items.reduce(
     (prevValue, item) => prevValue + item.amount,
     0,
   );
 
-  // Trigger jump when item is added
   useEffect(() => {
     if (numberOfCartItems > prevCount && numberOfCartItems > 0) {
       setIsJumping(true);

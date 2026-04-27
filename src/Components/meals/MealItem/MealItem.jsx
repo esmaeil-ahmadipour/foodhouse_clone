@@ -1,12 +1,13 @@
-import { useContext } from "react";
 import styles from "./MealItem.module.css";
 import MealItemForm from "./MealItemForm";
-import CartContext from "../../../store/cart-context";
+import { useCartStore } from "../../../store/useCartStore";
+
 const MealItem = (props) => {
-  const cartContext = useContext(CartContext);
+  const addItem = useCartStore((state) => state.addItem);
   let price = `${props.price} USD`;
+
   const addToCartHandler = (amount) => {
-    cartContext.addItem({
+    addItem({
       id: props.id,
       name: props.name,
       amount: amount,
@@ -23,7 +24,7 @@ const MealItem = (props) => {
           <div className={styles.price}>{price}</div>
         </h3>
       </div>
-      <MealItemForm id={props.key} onAddToCart={addToCartHandler} />
+      <MealItemForm id={props.id} onAddToCart={addToCartHandler} />
     </li>
   );
 };

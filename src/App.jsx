@@ -1,29 +1,24 @@
-import { useState } from "react";
-import "./App.css";
-import Cart from "./Components/Cart/Cart";
 import Header from "./Components/Layouts/Header";
 import Meals from "./Components/meals/Meals";
-import CartProvider from "./store/cart-provider";
-
+import { useModalStore } from "./store/useModalStore";
+import GlobalModalHost from "./Components/UI/GlobalModalHost";
 
 function App() {
-  const [isShowCart, setIsShowCart] = useState(false);
-  const showCartHandler = () => {
-    setIsShowCart(true);
-  };
+  const openModal = useModalStore((state) => state.openModal);
 
-  const hideCartHandler = () => {
-    setIsShowCart(false);
+  const showCartHandler = () => {
+    openModal({ type: "cart" });
   };
 
   return (
-    <CartProvider>
+    <>
       <Header onshowCart={showCartHandler} />
       <main>
-        <Meals></Meals>
+        <Meals />
       </main>
-      {isShowCart && <Cart onClose={hideCartHandler}></Cart>}
-    </CartProvider>
+      <GlobalModalHost />
+    </>
   );
 }
+
 export default App;

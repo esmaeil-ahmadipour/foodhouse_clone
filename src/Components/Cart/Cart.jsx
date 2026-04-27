@@ -1,27 +1,35 @@
-import { useContext, useState } from "react";
-import Modal from "../UI/Modal";
+import { useState } from "react";
 import styles from "./Cart.module.css";
-import CartContext from "../../store/cart-context";
 import CartItem from "./CartItem";
 import Checkout from "./Checkout";
 import useHttp from "../../hooks/useHttp";
+import { useModalStore } from "../../store/useModalStore";
+import { useCartStore } from "../../store/useCartStore";
 
-const Cart = (props) => {
+const Cart = () => {
+  const closeModal = useModalStore((state) => state.closeModal);
   const [isCheckout, setIsCheckout] = useState(false);
   const { loading, error, sendRequest } = useHttp();
   const [requestResult, setRequestResult] = useState();
 
+  // Migrated from CartContext to useCartStore (Zustand)
+  const items = useCartStore((state) => state.items);
+  const totalAmount = useCartStore((state) => state.totalAmount);
+  const addItem = useCartStore((state) => state.addItem);
+  const removeItem = useCartStore((state) => state.removeItem);
+  const clearCart = useCartStore((state) => state.clear);
+
+  const totalAmounts = `${totalAmount} USD`;
+  const hasItem = items.length > 0;
+
   const cartItemAddHandler = (item) => {
-    cartCtxt.addItem({ ...item, amount: 1 });
+    addItem({ ...item, amount: 1 });
   };
 
   const cartItemRemoveHandler = (id) => {
-    cartCtxt.removeItem(id);
+    removeItem(id);
   };
 
-  const cartCtxt = useContext(CartContext);
-  const totalAmounts = ` ${cartCtxt.totalAmount} USD`;
-  const hasItem = cartCtxt.items.length > 0;
   const orderClickHandler = () => {
     setIsCheckout(true);
   };
@@ -37,14 +45,14 @@ const Cart = (props) => {
         body: {
           order: {
             user: userInfo,
-            meals: cartCtxt.items,
+            meals: items,
           },
         },
       },
       (data) => {
         setRequestResult(data.result);
         if (data.result === "ok") {
-          cartCtxt.clear();
+          clearCart();
         }
       },
     );
@@ -52,10 +60,9 @@ const Cart = (props) => {
 
   const modalActions = (
     <div className={styles.actions}>
-      <button className={styles["cart-button-alt"]} onClick={props.onClose}>
+      <button className={styles["cart-button-alt"]} onClick={closeModal}>
         Close
       </button>
-
       {hasItem && (
         <button className={styles.button} onClick={orderClickHandler}>
           Place Order
@@ -64,9 +71,9 @@ const Cart = (props) => {
     </div>
   );
 
-  const cartItems = (
+  const cartItemsList = (
     <ul className={styles["cart-items"]}>
-      {cartCtxt.items.map((item) => (
+      {items.map((item) => (
         <CartItem
           key={item.id}
           name={item.name}
@@ -81,33 +88,28 @@ const Cart = (props) => {
 
   const modalContent = (
     <>
-      {cartCtxt.items.length > 0 && cartItems}
-
-      {cartCtxt.items.length === 0 && (
+      {items.length > 0 && cartItemsList}
+      {items.length === 0 && (
         <div className={styles.emptyCart}>
           <p>Your cart is empty 😢</p>
           <p>Add some delicious meals!</p>
         </div>
       )}
-
-      {/* فقط وقتی آیتم هست قیمت نشون بده */}
-      {cartCtxt.items.length > 0 && (
+      {items.length > 0 && (
         <div className={styles.total}>
           <span>Total Price</span>
           <span>{totalAmounts}</span>
         </div>
       )}
-
       {isCheckout && (
-        <Checkout onCancel={props.onClose} onConfirm={checkoutConfirmHandler} />
+        <Checkout onCancel={closeModal} onConfirm={checkoutConfirmHandler} />
       )}
-
       {!isCheckout && modalActions}
     </>
   );
 
   const modalLoading = <p>Sending request...</p>;
-  const modalError = <p> Failed to send request </p>;
+  const modalError = <p>Failed to send request</p>;
   const modalSucceedMessage = (
     <div className={styles.successContainer}>
       <div className={styles.successIcon}>✅</div>
@@ -118,18 +120,19 @@ const Cart = (props) => {
       <p className={styles.successDetails}>
         We'll send you a confirmation email shortly
       </p>
-      <button className={styles.successButton} onClick={props.onClose}>
+      <button className={styles.successButton} onClick={closeModal}>
         Continue Shopping
       </button>
     </div>
   );
+
   return (
-    <Modal onClose={props.onClose}>
+    <>
       {!loading && !error && requestResult !== "ok" && modalContent}
       {loading && modalLoading}
       {error && modalError}
       {requestResult === "ok" && modalSucceedMessage}
-    </Modal>
+    </>
   );
 };
 

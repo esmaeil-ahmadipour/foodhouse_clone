@@ -1,22 +1,26 @@
 # Food House – Modern Food Ordering App
 
-A clean, modern, and fast food ordering application built with **React 18** and **Vite 5**. The app features a meals list, an interactive cart modal, and global state management powered by React Context API.
+A clean, modern, and fast food ordering application built with **React 18** and **Vite 5**. The app features a meals list, an interactive cart modal, and global state management powered by **Zustand**.
 
 ## 🚀 Overview
 
 React Meals allows users to:
 
-- Browse meals
+- Browse meals from a backend API
 - Add items to a shopping cart
 - Adjust item quantities
 - Open/close a responsive cart modal
-- Enjoy fast performance powered by Vite
+- Submit orders with form validation
+- Enjoy persistent cart state (localStorage)
+- Fast performance powered by Vite
 
 ## 🎯 Features
 
-- 🛒 Interactive Cart Modal
-- 🍽️ Meals Listing UI
-- 🔥 Global State with Context Provider
+- 🛒 Interactive Cart Modal with Zustand state management
+- 🍽️ Dynamic Meals Listing from API
+- 🎯 Centralized Modal System (GlobalModalHost)
+- 📦 Persistent Cart State (localStorage)
+- ✅ Form Validation with Zod
 - ⚡ Super-fast Dev Server (Vite)
 - ♻️ Modular and Reusable Components
 - ✨ Clean UI & Maintainable Codebase
@@ -27,7 +31,8 @@ React Meals allows users to:
 - React 18
 - Vite 5
 - JavaScript (ES Module)
-- Context API
+- Zustand (State Management)
+- Zod (Validation)
 - ESLint 9
 - pnpm
 
@@ -89,9 +94,14 @@ pnpm lint      # Run ESLint
 pnpm preview   # Preview built app
 ```
 
-## 🌟 Why This Project Is Awesome
+## 🔄 Migration from Context API
 
-This repository is a **clean and scalable foundation** for building real-world food ordering apps, stores, and any cart-driven UI systems.
+Migrated from React Context API to Zustand for:
+
+- ✅ Less boilerplate
+- ⚡ Better performance (selective subscriptions)
+- 💾 Persistent cart (localStorage)
+- 🧹 Simpler component logic
 
 ## 📄 License
 
